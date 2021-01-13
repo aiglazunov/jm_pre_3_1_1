@@ -1,5 +1,6 @@
 package web.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import web.model.User;
 import web.repository.UserRepository;
@@ -11,9 +12,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl (UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Override
     public List<User> allUsers() {
         return userRepository.findAll();
@@ -21,11 +23,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
     public void update(User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.saveAndFlush(user);
     }
 
@@ -35,8 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteById(long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public User getById(long id) {
-        return userRepository.getOne(id);
+        return userRepository.findById(id).get();
     }
 
     @Override

@@ -30,7 +30,7 @@
     </nav>
 </header>
 
-<div th:fragment="users-table" class="card">
+<div th:fragment="usersTable" class="card">
     <div class="card-header">
         <h5 class="card-title">All users</h5>
     </div>
@@ -68,8 +68,9 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
-                                        <button type="button" class="btn-close" data-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
 
                                     <form action="#" th:action="@{/admin/edit}"
@@ -161,8 +162,9 @@
                                                 aria-label="Close"></button>
                                     </div>
 
-                                    <form action="#" th:action="@{/admin/delete}"
-                                          th:object="${user}" method="post">
+                                    <form action="#" th:action="@{/admin/delete/{id}(id=${user.id})}"
+                                          method="post">
+<!--                                          th:object="${user}"-->
                                         <div class="modal-body">
 
                                             <div class="form-group text-center font-weight-bold">
@@ -271,7 +273,7 @@
     </div>
 </div>
 
-<div th:fragment="new-user" class="card">
+<div th:fragment="newUser" class="card">
     <div class="card-header">
         <h5 class="card-title">Add new user</h5>
     </div>
@@ -312,7 +314,7 @@
 
                 <label th:text="Roles"></label><br/>
                 <!--        <select th:field="*{roles}" multiple="multiple">-->
-                <select id="allRoles_new" name="allRoles" multiple="multiple">
+                <select class="form-control mb-2" id="allRoles_new" name="allRoles" multiple="multiple" size="2">
                     <option value="ROLE_USER">ROLE_USER</option>
                     <option value="ROLE_ADMIN">ROLE_ADMIN</option>
                 </select><br/>
